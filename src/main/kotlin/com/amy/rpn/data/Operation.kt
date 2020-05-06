@@ -15,7 +15,7 @@ enum class UnaryOperation(private val symbol: String) {
 
     // The resCount represents count of numbers in result
     // For operator sqrt, sqrt(9.0) -> 3.0, resCount is 1 (the 3.0)
-    // For operator swap, swap(3.0, 4.0) -> 4.0, 3.0, resCount is 2 (the 3.0 and 4.0)
+    // For operator swap, swap(3.0, 4.0) -> 4.0, 3.0, resCount is 2 (the 4.0 and 3.0)
     abstract val resCount: Int
 
     companion object {
