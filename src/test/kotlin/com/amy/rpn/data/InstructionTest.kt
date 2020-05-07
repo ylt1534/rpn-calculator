@@ -77,12 +77,13 @@ class InstructionTest: StringSpec() {
                         stack,
                         history
                     )
-                    stack shouldContainExactlyInAnyOrder listOf(operation.apply(operandA, operandB))
+                    val res = operation.apply(operandA, operandB)
+                    stack shouldContainExactlyInAnyOrder res
                     history shouldContainExactlyInAnyOrder listOf(
                         BinaryInstructionSnapshot(
                             operandA,
                             operandB,
-                            operation.resCount
+                            res.size
                         )
                     )
                 }

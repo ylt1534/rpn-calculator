@@ -5,19 +5,12 @@ import kotlin.math.sqrt
 
 enum class UnaryOperation(private val symbol: String) {
     SQRT("sqrt") {
-        override fun apply(x: Double) = sqrt(x)
-        override val resCount: Int get() = 1
+        override fun apply(x: Double) = listOf(sqrt(x))
     };
 
-    abstract fun apply(x: Double): Double
+    abstract fun apply(x: Double): List<Double>
 
     override fun toString(): String = symbol
-
-    // The resCount represents count of numbers in result
-    // For operator sqrt, sqrt(9.0) -> 3.0, resCount is 1 (the 3.0)
-    // For operator swap, swap(3.0, 4.0) -> 4.0, 3.0, resCount is 2 (the 4.0 and 3.0)
-    abstract val resCount: Int
-
     companion object {
         @JvmStatic
         fun symbolToEnum(symbol: String) = values().firstOrNull { it.symbol == symbol }
@@ -27,33 +20,26 @@ enum class UnaryOperation(private val symbol: String) {
 
 enum class BinaryOperation(private val symbol: String) {
     ADDITION("+") {
-        override fun apply(x: Double, y: Double) =  x + y
-        override val resCount: Int get() = 1
+        override fun apply(x: Double, y: Double) =  listOf(x + y)
     },
     SUBTRACTION("-") {
-        override fun apply(x: Double, y: Double) =  x - y
-        override val resCount: Int get() = 1
+        override fun apply(x: Double, y: Double) =  listOf(x - y)
     },
     MULTIPLICATION("*") {
-        override fun apply(x: Double, y: Double) =  x * y
-        override val resCount: Int get() = 1
+        override fun apply(x: Double, y: Double) =  listOf(x * y)
     },
     DIVISION("/") {
         @Throws(CalculatorException::class)
-        override fun apply(x: Double, y: Double): Double {
+        override fun apply(x: Double, y: Double): List<Double> {
             if (y == 0.0) {
                 throw CalculatorException("Divide by 0 is forbidden")
             }
-            return x / y
+            return listOf(x / y)
         }
-
-        override val resCount: Int get() = 1
     };
 
     @Throws(CalculatorException::class)
-    abstract fun apply(x: Double, y: Double): Double
-
-    abstract val resCount: Int
+    abstract fun apply(x: Double, y: Double): List<Double>
 
     override fun toString(): String = symbol
 

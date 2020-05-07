@@ -22,8 +22,9 @@ data class UnaryInstruction(val position: Int, val operation: UnaryOperation): I
             throw CalculatorException("operator $operation (position: ${position + 1}): insufficient parameters")
         } else {
             val operand = stack.pop()
-            stack.push(operation.apply(operand))
-            history.push(UnaryInstructionSnapshot(operand, operation.resCount))
+            val res = operation.apply(operand)
+            stack.addAll(res)
+            history.push(UnaryInstructionSnapshot(operand, res.size))
         }
     }
 }
@@ -37,12 +38,13 @@ data class BinaryInstruction(val position: Int, val operation: BinaryOperation):
             val operandB = stack.pop()
             val operandA = stack.pop()
             try {
-                stack.push(operation.apply(operandA, operandB))
+                val res = operation.apply(operandA, operandB)
+                stack.addAll(res)
                 history.push(
                     BinaryInstructionSnapshot(
                         operandA,
                         operandB,
-                        operation.resCount
+                        res.size
                     )
                 )
             } catch (e: CalculatorException) {
